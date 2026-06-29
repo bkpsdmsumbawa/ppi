@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Layanan ASN - BKPSDM Kabupaten Sumbawa</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #0F172A;       /* Deep Navy Blue */
+      --secondary: #1E3A8A;     /* Governance Blue */
+      --accent: #D97706;        /* Gold/Amber Accent */
+      --accent-hover: #B45309;
+      --bg-gradient: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --text-main: #1E293B;
+      --text-muted: #64748B;
+      --success: #059669;       /* Emerald Green untuk variasi kartu ketiga */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #F8FAFC;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation Bar */
+    .navbar {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-brand {
+      color: #ffffff;
+      font-weight: 800;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-brand span {
+      color: var(--accent);
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-item a {
+      color: #94A3B8;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .nav-item a:hover {
+      color: #ffffff;
+    }
+
+    .nav-item a.active {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Hero Banner Section */
+    .hero-banner {
+      background: var(--bg-gradient);
+      color: #ffffff;
+      padding: 6rem 2rem 10rem 2rem;
+      text-align: center;
+      position: relative;
+      border-bottom: 5px solid var(--accent);
+    }
+
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 20px 20px;
+      opacity: 0.6;
+    }
+
+    .gov-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(217, 119, 6, 0.15);
+      border: 1px solid var(--accent);
+      color: #FBBF24;
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      animation: fadeInDown 0.8s ease;
+    }
+
+    .hero-title {
+      font-size: 2.75rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: #94A3B8;
+      max-width: 750px;
+      margin: 0 auto;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    /* Main Container & Grid Cards Layout */
+    .main-container {
+      max-width: 1200px;
+      width: 100%;
+      margin: -6rem auto auto auto;
+      padding: 0 1.5rem 4rem 1.5rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .grid-portal {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .portal-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.03), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+      border: 1px solid #E2E8F0;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portal-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 4px;
+      background: var(--secondary);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .portal-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .portal-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px -5px rgba(15, 23, 42, 0.08), 0 10px 15px -5px rgba(15, 23, 42, 0.04);
+      border-color: #CBD5E1;
+    }
+
+    .card-header-icon {
+      width: 60px;
+      height: 60px;
+      background: #EFF6FF;
+      color: var(--secondary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .portal-card:hover .card-header-icon {
+      background: var(--secondary);
+      color: #ffffff;
+    }
+
+    /* Card Themes Customization */
+    .portal-card.theme-pns::before { background: var(--secondary); }
+    
+    .portal-card.theme-pppk::before { background: var(--accent); }
+    .portal-card.theme-pppk .card-header-icon { background: #FEF3C7; color: var(--accent); }
+    .portal-card.theme-pppk:hover .card-header-icon { background: var(--accent); color: #ffffff; }
+
+    .portal-card.theme-paruh::before { background: var(--success); }
+    .portal-card.theme-paruh .card-header-icon { background: #ECFDF5; color: var(--success); }
+    .portal-card.theme-paruh:hover .card-header-icon { background: var(--success); color: #ffffff; }
+
+    .card-title {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .card-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+      flex-grow: 1;
+    }
+
+    .card-action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: #F1F5F9;
+      color: var(--primary);
+      text-decoration: none;
+      padding: 0.9rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      border: 1px solid #E2E8F0;
+    }
+
+    .portal-card.theme-pns:hover .card-action-btn { background: var(--secondary); color: #ffffff; border-color: var(--secondary); }
+    .portal-card.theme-pppk:hover .card-action-btn { background: var(--accent); color: #ffffff; border-color: var(--accent); }
+    .portal-card.theme-paruh:hover .card-action-btn { background: var(--success); color: #ffffff; border-color: var(--success); }
+
+    .card-action-btn i { transition: transform 0.2s ease; }
+    .card-action-btn:hover i { transform: translateX(4px); }
+
+    /* Info & Call Center Extra Sections */
+    .extra-section {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem 1.5rem;
+    }
+
+    .section-divider {
+      border: 0;
+      height: 1px;
+      background: #E2E8F0;
+      margin-bottom: 4rem;
+    }
+
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .info-content {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 2.5rem;
+      border: 1px solid #E2E8F0;
+      line-height: 1.7;
+      color: #475569;
+    }
+
+    .info-content h4 {
+      margin-top: 1rem;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .cc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .cc-card {
+      background: #ffffff;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .cc-icon {
+      font-size: 1.5rem;
+      color: var(--secondary);
+      background: #EFF6FF;
+      width: 50px;
+      height: 50px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Footer */
+    footer {
+      background: #0F172A;
+      color: #94A3B8;
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      font-size: 0.9rem;
+      border-top: 1px solid #1E293B;
+    }
+
+    footer p strong {
+      color: #E2E8F0;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive Breakdown */
+    @media (max-width: 768px) {
+      .navbar { padding: 1rem; flex-direction: column; gap: 1rem; }
+      .nav-menu { gap: 1rem; flex-wrap: wrap; justify-content: center; }
+      .hero-title { font-size: 2rem; }
+      .hero-subtitle { font-size: 1.05rem; }
+      .main-container { margin-top: -4rem; }
+      .hero-banner { padding: 5rem 1rem 8rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="#" class="nav-brand">
+      <i class="fa-solid fa-layer-group"></i> Portal<span>ASN</span>
+    </a>
+    <ul class="nav-menu">
+      <li class="nav-item"><a href="#" class="active"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li class="nav-item"><a href="#menu-layanan"><i class="fa-solid fa-grid-2"></i> Menu</a></li>
+      <li class="nav-item"><a href="#information"><i class="fa-solid fa-circle-info"></i> Information</a></li>
+      <li class="nav-item"><a href="#call-center"><i class="fa-solid fa-headset"></i> Call Center</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero-banner">
+    <div class="gov-badge">
+      <i class="fa-solid fa-shield-halved"></i> Integrasi Manajemen Aparatur
+    </div>
+    <h1 class="hero-title">PORTAL UTAMA LAYANAN ASN</h1>
+    <p class="hero-subtitle">Badan Kepegawaian dan Pengembangan Sumber Daya Manusia (BKPSDM) <br>Pemerintah Kabupaten Sumbawa</p>
+  </header>
+
+  <main class="main-container" id="menu-layanan">
+    <section class="grid-portal">
+      
+      <article class="portal-card theme-pns">
+        <div>
+          <div class="card-header-icon">
+            <i class="fa-solid fa-user-tie"></i>
+          </div>
+          <h2 class="card-title">Pegawai Negeri Sipil (PNS)</h2>
+          <p class="card-desc">Akses pusat manajemen karir, berkas digital mutasi, kenaikan pangkat, penilaian kinerja berkala, serta informasi kesejahteraan dan pensiun bagi seluruh instansi PNS Kabupaten Sumbawa.</p>
+        </div>
+        <a href="./PNS/" class="card-action-btn">
+          Masuk Layanan PNS <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </article>
+
+      <article class="portal-card theme-pppk">
+        <div>
+          <div class="card-header-icon">
+            <i class="fa-solid fa-file-signature"></i>
+          </div>
+          <h2 class="card-title">Pegawai Pemerintah (PPPK)</h2>
+          <p class="card-desc">Sistem pengelolaan administrasi kontrak kerja digital, evaluasi perpanjangan masa perjanjian, pengisian e-dokumen berkas evaluasi, dan pemantauan SK berkala PPPK.</p>
+        </div>
+        <a href="./PPPK/" class="card-action-btn">
+          Masuk Layanan PPPK <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </article>
+
+      <article class="portal-card theme-paruh">
+        <div>
+          <div class="card-header-icon">
+            <i class="fa-solid fa-user-clock"></i>
+          </div>
+          <h2 class="card-title">ASN Paruh Waktu</h2>
+          <p class="card-desc">Pusat dokumentasi, monitoring data penugasan khusus, pelaporan presensi kerja transparan, serta validasi berkas pendukung bagi pegawai paruh waktu / kontrak daerah.</p>
+        </div>
+        <a href="./Paruh%20Waktu/" class="card-action-btn">
+          Masuk Layanan Paruh Waktu <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </article>
+
+    </section>
+  </main>
+
+  <hr class="section-divider">
+
+  <section class="extra-section" id="information">
+    <h3 class="section-title"><i class="fa-solid fa-circle-info" style="color: var(--secondary);"></i> Informasi Layanan</h3>
+    <div class="info-content">
+      <p>Selamat datang di Ekosistem Layanan Terpadu BKPSDM Kabupaten Sumbawa. Portal ini dibangun untuk mempermudah aksesibilitas data bagi segenap Aparatur Sipil Negara di lingkungan pemerintahan daerah. Melalui standardisasi subfolder repositori berbasis cloud, integrasi manajemen dokumen kepegawaian kini dapat berjalan lebih cepat, aman, dan minim birokrasi fisik.</p>
+      <h4>Ketentuan Umum Penggunaan Aplikasi:</h4>
+      <p>1. Pastikan koneksi internet Anda stabil demi kelancaran proses upload/download e-dokumen.</p>
+      <p>2. Segala bentuk pembaruan data internal folder wajib divalidasi oleh verifikator BKPSDM masing-masing unit kerja.</p>
+    </div>
+  </section>
+
+  <section class="extra-section" id="call-center">
+    <h3 class="section-title"><i class="fa-solid fa-headset" style="color: var(--accent);"></i> Call Center & Bantuan</h3>
+    <div class="cc-grid">
+      <div class="cc-card">
+        <div class="cc-icon"><i class="fa-solid fa-phone"></i></div>
+        <div>
+          <p class="nav-item" style="font-weight: 700;">Telepon Kantor</p>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">(0371) 21111 / Ext. 402</p>
+        </div>
+      </div>
+      <div class="cc-card">
+        <div class="cc-icon" style="color: #25D366; background: #E8FAD4;"><i class="fa-brands fa-whatsapp"></i></div>
+        <div>
+          <p style="font-weight: 700;">WhatsApp Helpdesk</p>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">+62 812-3456-7890</p>
+        </div>
+      </div>
+      <div class="cc-card">
+        <div class="cc-icon" style="color: #EA4335; background: #FCE8E6;"><i class="fa-solid fa-envelope"></i></div>
+        <div>
+          <p style="font-weight: 700;">Email Resmi</p>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">bkpsdm@sumbawakab.go.id</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 <strong>BKPSDM</strong>. Pemerintah Kabupaten Sumbawa <br>Terwujudnya Kabupaten Sumbawa yang Unggul, Maju, dan Sejahtera.</p>
+  </footer>
+
+</body>
+</html>
